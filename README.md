@@ -38,7 +38,7 @@ Crear una aplicación To-Do con funcionalidades CRUD, patrones de diseño como *
   - Uso: `Tarea tarea = TareaBuilder.builder().titulo("Estudiar").descripcion("Leer Spring").build();`
   
 - 🧠 **Proxy Pattern**: Utilizado para aplicar cache en el listado de tareas, mejorando el rendimiento cuando hay muchas solicitudes.
-  - El proxy se encarga de devolver resultados cacheados si no ha habido cambios.
+  - El proxy se encarga de devolver resultados cacheados si no hay cambios
 
 ---
 
