@@ -1,54 +1,56 @@
-#To-Do App
+# 📝 To-Do App (API REST con Spring Boot)
 
-Enunciado: Registro de Tareas Pendientes (To-Do App básica)
-🎯 Objetivo:
-Crear una API REST con Spring Boot para gestionar tareas pendientes (To-Do).
+Una API REST básica para gestionar tareas pendientes, diseñada con buenas prácticas de arquitectura, patrones de diseño y capas bien definidas.
 
-✅ Funcionalidades requeridas:
-Listar todas las tareas.
+---
 
-Agregar una nueva tarea (con título y descripción).
+## 🎯 Objetivo
 
-Marcar una tarea como completada.
+Crear una aplicación To-Do con funcionalidades CRUD, patrones de diseño como **Builder** y **Proxy**, y uso de **DTOs y Mappers** para separación de capas.
 
-Eliminar una tarea.
+---
 
-🧱 Estructura sugerida:
-Modelo: Tarea con campos:
+## ✅ Funcionalidades
 
-id (Long)
+- 📋 Listar todas las tareas
+- ➕ Crear una nueva tarea
+- ✅ Marcar una tarea como completada
+- ❌ Eliminar una tarea
 
-titulo (String)
+---
 
-descripcion (String)
+## 🧱 Estructura del Modelo
 
-completado (boolean)
+### Clase: `Tarea`
 
-Controlador REST con los siguientes endpoints:
+| Campo         | Tipo     | Descripción                      |
+|---------------|----------|----------------------------------|
+| `id`          | Long     | Identificador único de la tarea |
+| `titulo`      | String   | Título de la tarea              |
+| `descripcion` | String   | Descripción de la tarea         |
+| `completado`  | boolean  | Indica si está completada       |
 
-GET /tareas → Listar todas las tareas
+---
 
-POST /tareas → Crear una nueva tarea
+## 🧩 Patrones de Diseño Implementados
 
-PUT /tareas/{id}/completar → Marcar como completada
+- 🧱 **Builder Pattern**: Para crear instancias de `Tarea` de forma más legible y flexible.
+  - Uso: `Tarea tarea = TareaBuilder.builder().titulo("Estudiar").descripcion("Leer Spring").build();`
+  
+- 🧠 **Proxy Pattern**: Utilizado para aplicar cache en el listado de tareas, mejorando el rendimiento cuando hay muchas solicitudes.
+  - El proxy se encarga de devolver resultados cacheados si no ha habido cambios.
 
-DELETE /tareas/{id} → Eliminar una tarea
+---
 
-🛠 Requisitos técnicos:
-Spring Boot
+## 🔄 Uso de DTOs y MapStruct
 
-Spring Web
+- **DTOs** (`TareaRequest`, `TareaResponse`) usados para separar la lógica de la API del modelo interno.
+- **Mappers** generados automáticamente con [MapStruct](https://mapstruct.org/), facilitando la conversión entre entidades y DTOs.
 
-Datos en memoria usando List<Tarea> (sin base de datos por ahora)
-
-Estructura limpia con paquetes separados:
-
-model
-
-dto
-
-service
-
-controller
-
-mapper (si usas MapStruct)
+```java
+@Mapper(componentModel = "spring")
+public interface TareaMapper {
+    Tarea tareaRequestToTarea(TareaRequest request);
+    TareaResponse tareaToTareaResponse(Tarea tarea);
+    List<TareaResponse> tareaListToTareaResponseList(List<Tarea> tareas);
+}
