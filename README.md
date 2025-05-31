@@ -54,5 +54,6 @@ public interface TareaMapper {
     TareaResponse tareaToTareaResponse(Tarea tarea);
     List<TareaResponse> tareaListToTareaResponseList(List<Tarea> tareas);
 }
+```
 
 [![diagram.png](https://i.postimg.cc/rwDQvRXs/diagram.png)](https://postimg.cc/9Djd9MfH)
